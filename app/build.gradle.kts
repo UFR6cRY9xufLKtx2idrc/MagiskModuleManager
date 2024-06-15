@@ -30,16 +30,7 @@ android {
 
     namespace = "com.fox2code.mmm"
     compileSdk = 34
-    ndkVersion = "25.2.9519653"
-    signingConfigs {
-        create("release") {
-            if (File("signing.properties").exists()) {
-                val properties = Properties().apply {
-                    load(File("signing.properties").reader())
-                }
-            }
-        }
-    }
+    ndkVersion = "26.3.11579264"
     defaultConfig {
         applicationId = "com.fox2code.mmm"
         minSdk = 26
@@ -108,7 +99,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             renderscriptOptimLevel = 3
-            signingConfig = signingConfigs.getByName("release")
             multiDexEnabled = true
             isDebuggable = false
             isJniDebuggable = false
