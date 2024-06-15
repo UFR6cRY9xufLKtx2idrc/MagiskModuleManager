@@ -127,8 +127,8 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: |
-            app/build/outputs/apk/default/release/*-default-*-release-unsigned.apk
-            app/build/outputs/apk/fdroid/release/*-fdroid-*-release-unsigned.apk
+            app/build/outputs/apk/default/release/app-default-*-release-unsigned.apk
+            app/build/outputs/apk/fdroid/release/app-fdroid-*-release-unsigned.apk
           tag: test-${{ github.run_number }}
           overwrite: true
           file_glob: true
