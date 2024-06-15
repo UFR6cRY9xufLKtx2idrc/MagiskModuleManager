@@ -1,5 +1,5 @@
 #file: noinspection SpellCheckingInspection
-name: Generate APK Debug
+name: Generate APK Release
 
 on:
   push:
@@ -59,9 +59,6 @@ jobs:
       - name: Build apk fdroid-release
         run: ./gradlew app:assembleFdroidRelease
 
-      - name: Build apk play-release
-        run: ./gradlew app:assemblePlayRelease
-
       # UPLOAD ARTIFACT SECTION
       # Will be shorter, when https://github.com/actions/upload-artifact/pull/354 will be merged
       # AMMM-default-release
@@ -69,88 +66,69 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-default-arm64-v8a-release
-          path: app/build/outputs/apk/default/debug/*-default-arm64-v8a-release.apk
+          path: app/build/outputs/apk/default/release/*-default-arm64-v8a-release.apk
 
       - name: Upload AMMM-default-armeabi-v7a-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-default-armeabi-v7a-release
-          path: app/build/outputs/apk/default/debug/*-default-armeabi-v7a-release.apk
+          path: app/build/outputs/apk/default/release/*-default-armeabi-v7a-release.apk
 
       - name: Upload AMMM-default-universal-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-default-universal-release
-          path: app/build/outputs/apk/default/debug/*-default-universal-release.apk
+          path: app/build/outputs/apk/default/release/*-default-universal-release.apk
 
       - name: Upload AMMM-default-x86-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-default-x86-release
-          path: app/build/outputs/apk/default/debug/*-default-x86-release.apk
+          path: app/build/outputs/apk/default/release/*-default-x86-release.apk
 
       - name: Upload AMMM-default-x86_64-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-default-x86_64-release
-          path: app/build/outputs/apk/default/debug/*-default-x86_64-release.apk
+          path: app/build/outputs/apk/default/release/*-default-x86_64-release.apk
 
       - name: Upload AMMM-fdroid-arm64-v8a-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-fdroid-arm64-v8a-release
-          path: app/build/outputs/apk/fdroid/debug/*-fdroid-arm64-v8a-release.apk
+          path: app/build/outputs/apk/fdroid/release/*-fdroid-arm64-v8a-release.apk
 
       - name: Upload AMMM-fdroid-armeabi-v7a-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-fdroid-armeabi-v7a-release
-          path: app/build/outputs/apk/fdroid/debug/*-fdroid-armeabi-v7a-release.apk
+          path: app/build/outputs/apk/fdroid/release/*-fdroid-armeabi-v7a-release.apk
 
       - name: Upload AMMM-fdroid-universal-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-fdroid-universal-release
-          path: app/build/outputs/apk/fdroid/debug/*-fdroid-universal-release.apk
+          path: app/build/outputs/apk/fdroid/release/*-fdroid-universal-release.apk
 
       - name: Upload AMMM-fdroid-x86-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-fdroid-x86-release
-          path: app/build/outputs/apk/fdroid/debug/*-fdroid-x86-release.apk
+          path: app/build/outputs/apk/fdroid/release/*-fdroid-x86-release.apk
 
       - name: Upload AMMM-fdroid-x86_64-release
         uses: actions/upload-artifact@v4
         with:
           name: AMMM-fdroid-x86_64-release
-          path: app/build/outputs/apk/fdroid/debug/*-fdroid-x86_64-release.apk
+          path: app/build/outputs/apk/fdroid/release/*-fdroid-x86_64-release.apk
 
-      - name: Upload AMMM-play-arm64-v8a-release
-        uses: actions/upload-artifact@v4
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: AMMM-play-arm64-v8a-release
-          path: app/build/outputs/apk/play/debug/*-play-arm64-v8a-release.apk
-
-      - name: Upload AMMM-play-armeabi-v7a-release
-        uses: actions/upload-artifact@v4
-        with:
-          name: AMMM-play-armeabi-v7a-release
-          path: app/build/outputs/apk/play/debug/*-play-armeabi-v7a-release.apk
-
-      - name: Upload AMMM-play-universal-release
-        uses: actions/upload-artifact@v4
-        with:
-          name: AMMM-play-universal-release
-          path: app/build/outputs/apk/play/debug/*-play-universal-release.apk
-
-      - name: Upload AMMM-play-x86-release
-        uses: actions/upload-artifact@v4
-        with:
-          name: AMMM-play-x86-release
-          path: app/build/outputs/apk/play/debug/*-play-x86-release.apk
-
-      - name: Upload AMMM-play-x86_64-release
-        uses: actions/upload-artifact@v4
-        with:
-          name: AMMM-play-x86_64-release
-          path: app/build/outputs/apk/play/debug/*-play-x86_64-release.apk
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: |
+            app/build/outputs/apk/default/release/*-default-*-release.apk
+            app/build/outputs/apk/fdroid/release/*-fdroid-*-release.apk
+          tag: test-${{ github.run_number }}
+          overwrite: true
+          file_glob: true
